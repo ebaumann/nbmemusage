@@ -43,16 +43,12 @@ final class MemoryUsageDetailsPanel extends javax.swing.JPanel {
     private void initComponents() {//GEN-BEGIN:initComponents
         GridBagConstraints gridBagConstraints;
 
-        jLabel7 = new JLabel();
         labelTotalMemoryPrompt = new JLabel();
         labelTotalMemorySize = new JLabel();
         labelMaxMemoryPrompt = new JLabel();
         labelMaxMemorySize = new JLabel();
         labelFreeMemoryPrompt = new JLabel();
         labelFreeMemorySize = new JLabel();
-
-        Mnemonics.setLocalizedText(jLabel7, NbBundle.getMessage(MemoryUsageDetailsPanel.class, "MemoryUsageDetailsPanel.jLabel7.text")); // NOI18N
-        jLabel7.setName("jLabel7"); // NOI18N
 
         setBackground(new Color(255, 223, 181));
         setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
@@ -107,7 +103,6 @@ final class MemoryUsageDetailsPanel extends javax.swing.JPanel {
         add(labelFreeMemorySize, gridBagConstraints);
     }//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JLabel jLabel7;
     private JLabel labelFreeMemoryPrompt;
     private JLabel labelFreeMemorySize;
     private JLabel labelMaxMemoryPrompt;
