@@ -30,12 +30,12 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="labelTotalMemory">
+    <Component class="javax.swing.JLabel" name="labelUsedMemory">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="de/elmar_baumann/nbmemusage/Bundle.properties" key="MemoryUsageStatusLinePanel.labelTotalMemory.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="de/elmar_baumann/nbmemusage/Bundle.properties" key="MemoryUsageStatusLinePanel.labelUsedMemory.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="labelTotalMemory" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="labelUsedMemory" noResource="true"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

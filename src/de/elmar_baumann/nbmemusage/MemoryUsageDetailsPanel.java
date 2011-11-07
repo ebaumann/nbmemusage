@@ -22,16 +22,20 @@ final class MemoryUsageDetailsPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    void setTotalMemoryLongInfo(String info) {
+    void setTotalMemory(String info) {
         labelTotalMemorySize.setText(info);
     }
 
-    void setMaxMemoryLongInfo(String info) {
+    void setMaxMemory(String info) {
         labelMaxMemorySize.setText(info);
     }
 
-    void setFreeMemoryLongInfo(String info) {
+    void setFreeMemory(String info) {
         labelFreeMemorySize.setText(info);
+    }
+
+    void setUsedMemory(String info) {
+        labelUsedMemorySize.setText(info);
     }
 
     /** This method is called from within the constructor to
@@ -49,6 +53,8 @@ final class MemoryUsageDetailsPanel extends javax.swing.JPanel {
         labelMaxMemorySize = new JLabel();
         labelFreeMemoryPrompt = new JLabel();
         labelFreeMemorySize = new JLabel();
+        labelUsedMemoryPrompt = new JLabel();
+        labelUsedMemorySize = new JLabel();
 
         setBackground(new Color(255, 223, 181));
         setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
@@ -89,8 +95,7 @@ final class MemoryUsageDetailsPanel extends javax.swing.JPanel {
         labelFreeMemoryPrompt.setName("labelFreeMemoryPrompt"); // NOI18N
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new Insets(3, 3, 3, 0);
+        gridBagConstraints.insets = new Insets(3, 3, 0, 0);
         add(labelFreeMemoryPrompt, gridBagConstraints);
 
         labelFreeMemorySize.setName("labelFreeMemorySize"); // NOI18N
@@ -98,9 +103,25 @@ final class MemoryUsageDetailsPanel extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new Insets(3, 5, 0, 3);
+        add(labelFreeMemorySize, gridBagConstraints);
+
+        Mnemonics.setLocalizedText(labelUsedMemoryPrompt, NbBundle.getMessage(MemoryUsageDetailsPanel.class, "MemoryUsageDetailsPanel.labelUsedMemoryPrompt.text")); // NOI18N
+        labelUsedMemoryPrompt.setName("labelUsedMemoryPrompt"); // NOI18N
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new Insets(3, 3, 3, 0);
+        add(labelUsedMemoryPrompt, gridBagConstraints);
+
+        labelUsedMemorySize.setName("labelUsedMemorySize"); // NOI18N
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new Insets(3, 5, 3, 3);
-        add(labelFreeMemorySize, gridBagConstraints);
+        add(labelUsedMemorySize, gridBagConstraints);
     }//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JLabel labelFreeMemoryPrompt;
@@ -109,5 +130,7 @@ final class MemoryUsageDetailsPanel extends javax.swing.JPanel {
     private JLabel labelMaxMemorySize;
     private JLabel labelTotalMemoryPrompt;
     private JLabel labelTotalMemorySize;
+    private JLabel labelUsedMemoryPrompt;
+    private JLabel labelUsedMemorySize;
     // End of variables declaration//GEN-END:variables
 }

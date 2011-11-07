@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.MessageFormat;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
@@ -24,20 +25,22 @@ import javax.swing.JSeparator;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
-
 import javax.swing.SwingUtilities;
+
 import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
 
 /**
+ * Similar {@code org.openide.actions.HeapView} for the status line (smaller).
  * @author Elmar Baumann
  */
 public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
 
     private static final long serialVersionUID = 1L;
-    private static final int REFRESH_INTERVAL_IN_SECONDS = 2;
+    private static final int REFRESH_INTERVAL_IN_SECONDS = 1;
     private static final Icon ICON_UPARROW = new ImageIcon(MemoryUsageStatusLinePanel.class.getResource("/de/elmar_baumann/nbmemusage/uparrow.png"));
     private static final Icon ICON_DOWNARROW = new ImageIcon(MemoryUsageStatusLinePanel.class.getResource("/de/elmar_baumann/nbmemusage/downarrow.png"));
+    private final MessageFormat format = new MessageFormat("{0,choice,0#{0,number,0.0}|999<{0,number,0}} MB");
     private final MemoryUsageDetailsPanel detailsPanel = new MemoryUsageDetailsPanel();
     private final ScheduledExecutorService executorService;
     private Popup detailsPopup;
@@ -52,10 +55,9 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
 
     private void listen() {
         addMouseListener(toggleDetailsPanelDisplayListener);
-        labelTotalMemory.addMouseListener(toggleDetailsPanelDisplayListener);
+        labelUsedMemory.addMouseListener(toggleDetailsPanelDisplayListener);
         detailsPanel.addMouseListener(toggleDetailsPanelDisplayListener);
     }
-
     private final Runnable updater = new Runnable() {
 
         @Override
@@ -68,15 +70,19 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
             long totalMemoryInBytes = runtime.totalMemory();
             long freeMemoryInBytes = runtime.freeMemory();
             long maxMemoryInBytes = runtime.maxMemory();
-            SizeInfo sizeInfoTotalMemory = SizeInfo.createSizeInfo(totalMemoryInBytes);
-            SizeInfo sizeInfoFreeMemory = SizeInfo.createSizeInfo(freeMemoryInBytes);
-            SizeInfo sizeInfoMaxMemory = SizeInfo.createSizeInfo(maxMemoryInBytes);
-            labelTotalMemory.setText(sizeInfoTotalMemory.getShortInfo());
-            detailsPanel.setTotalMemoryLongInfo(sizeInfoTotalMemory.getLongInfo());
-            detailsPanel.setMaxMemoryLongInfo(sizeInfoMaxMemory.getLongInfo());
-            detailsPanel.setFreeMemoryLongInfo(sizeInfoFreeMemory.getLongInfo());
+            long usedMemoryInBytes = totalMemoryInBytes - freeMemoryInBytes;
+            labelUsedMemory.setText(formatAsMegabytes(usedMemoryInBytes));
+            detailsPanel.setTotalMemory(formatAsMegabytes(totalMemoryInBytes));
+            detailsPanel.setMaxMemory(formatAsMegabytes(maxMemoryInBytes));
+            detailsPanel.setFreeMemory(formatAsMegabytes(freeMemoryInBytes));
+            detailsPanel.setUsedMemory(formatAsMegabytes(usedMemoryInBytes));
         }
     };
+
+    private String formatAsMegabytes(long bytes) {
+        double megabytes = (double) bytes / 1024 / 1024;
+        return format.format(new Object[]{megabytes});
+    }
 
     private final ThreadFactory threadFactory = new ThreadFactory() {
 
@@ -118,7 +124,6 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
         int popupY = thisY - popupHeight;
         return new Point(popupX, popupY);
     }
-
     private final MouseListener toggleDetailsPanelDisplayListener = new MouseAdapter() {
 
         @Override
@@ -139,7 +144,7 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
         GridBagConstraints gridBagConstraints;
 
         separator = new JSeparator();
-        labelTotalMemory = new JLabel();
+        labelUsedMemory = new JLabel();
         buttonShowDetails = new JButton();
 
         setName("Form"); // NOI18N
@@ -151,13 +156,13 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         add(separator, gridBagConstraints);
 
-        labelTotalMemory.setToolTipText(NbBundle.getMessage(MemoryUsageStatusLinePanel.class, "MemoryUsageStatusLinePanel.labelTotalMemory.toolTipText")); // NOI18N
-        labelTotalMemory.setName("labelTotalMemory"); // NOI18N
+        labelUsedMemory.setToolTipText(NbBundle.getMessage(MemoryUsageStatusLinePanel.class, "MemoryUsageStatusLinePanel.labelUsedMemory.toolTipText")); // NOI18N
+        labelUsedMemory.setName("labelUsedMemory"); // NOI18N
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new Insets(0, 3, 0, 0);
-        add(labelTotalMemory, gridBagConstraints);
+        add(labelUsedMemory, gridBagConstraints);
 
         buttonShowDetails.setIcon(ICON_UPARROW);
         buttonShowDetails.setToolTipText(NbBundle.getMessage(MemoryUsageStatusLinePanel.class, "MemoryUsageStatusLinePanel.buttonShowDetails.toolTipText")); // NOI18N
@@ -181,7 +186,7 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonShowDetailsActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton buttonShowDetails;
-    private JLabel labelTotalMemory;
+    private JLabel labelUsedMemory;
     private JSeparator separator;
     // End of variables declaration//GEN-END:variables
 }
