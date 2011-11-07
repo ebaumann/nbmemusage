@@ -21,12 +21,15 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import org.openide.awt.Mnemonics;
 import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
 
@@ -143,10 +146,19 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
     private void initComponents() {//GEN-BEGIN:initComponents
         GridBagConstraints gridBagConstraints;
 
+        popupMenu = new JPopupMenu();
+        menuItemGarbageCollect = new JMenuItem();
         separator = new JSeparator();
         labelUsedMemory = new JLabel();
         buttonShowDetails = new JButton();
 
+        popupMenu.setName("popupMenu"); // NOI18N
+
+        menuItemGarbageCollect.setAction(new GarbageCollectAction());
+        menuItemGarbageCollect.setName("menuItemGarbageCollect"); // NOI18N
+        popupMenu.add(menuItemGarbageCollect);
+
+        setComponentPopupMenu(popupMenu);
         setName("Form"); // NOI18N
         setLayout(new GridBagLayout());
 
@@ -187,6 +199,8 @@ public class MemoryUsageStatusLinePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton buttonShowDetails;
     private JLabel labelUsedMemory;
+    private JMenuItem menuItemGarbageCollect;
+    private JPopupMenu popupMenu;
     private JSeparator separator;
     // End of variables declaration//GEN-END:variables
 }
