@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: de.elmar_baumann.nbmemusage/1
+OpenIDE-Module-Localizing-Bundle: de/elmar_baumann/nbmemusage/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
