@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Support for Statusline Clock" basedir="..">
+
+    <target name="create-keystore">
+        <!-- See http://wiki.netbeans.org/DevFaqSignNbm -->
+        <loadproperties srcfile="nbproject/private/support.properties" />
+        <!-- Example data in support.properties:
+            keystore.dname=CN\=Peter Miller, OU\=Private, O\=Private, L\=Munich, ST\=Bavaria, C\=de
+            keystore.location=nbproject/private/
+            keystore.name=keystore
+            keystore.alias=myself
+            keystore.password=specialsauce
+        -->
+        <echo message="Creating keystore ${keystore.location}${keystore.name}"/>
+        <delete file="${keystore.location}${keystore.name}"/>
+        <mkdir dir="${keystore.location}"/>
+        <genkey alias="${keystore.alias}"
+                storepass="${keystore.password}"
+                dname="${keystore.dname}"
+                keystore="${keystore.location}${keystore.name}"
+        />
+    </target>
+
+</project>
