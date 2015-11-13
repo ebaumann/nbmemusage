@@ -3,7 +3,7 @@
 
     <target name="create-keystore">
         <!-- See http://wiki.netbeans.org/DevFaqSignNbm -->
-        <loadproperties srcfile="nbproject/private/support.properties" />
+        <loadproperties srcfile="script/support.properties" />
         <!-- Example data in support.properties:
             keystore.dname=CN\=Peter Miller, OU\=Private, O\=Private, L\=Munich, ST\=Bavaria, C\=de
             keystore.location=nbproject/private/
